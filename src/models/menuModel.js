@@ -1,13 +1,13 @@
 const db = require('../../db/config');
 
 const menuModel = {};
-menuModel.getAll = (cb) => {
+menuModel.getAll = () => {
     return new Promise((resolve, reject) => {
         db.all('SELECT * FROM menu', (err, rows) => {
             if (err) {
                 reject(err);
             } else {
-                return resolve(rows);
+                resolve(rows);
             }
         });
     });

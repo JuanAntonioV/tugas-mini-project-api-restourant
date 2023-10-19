@@ -3,6 +3,7 @@ const express = require('express');
 const menuController = require('../controllers/menuController');
 const categoriesController = require('../controllers/categoriesController');
 const customerController = require('../controllers/customerController');
+const orderController = require('../controllers/orderController');
 const router = express.Router();
 
 // router.get('/menus',exampleController.getAll)
@@ -26,5 +27,8 @@ router.post('/customer', customerController.create);
 router.get('/customer/:id', customerController.getOneById);
 router.patch('/customer/:id', customerController.update);
 router.delete('/customer/:id', customerController.delete);
+
+router.get('/orders', orderController.getAll);
+router.post('/order/create', orderController.create);
 
 module.exports = router;

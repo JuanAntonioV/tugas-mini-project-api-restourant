@@ -56,4 +56,5 @@ module.exports = {
     serverErrorResponse,
     notFoundResponse,
     resMessage,
+    resStatus,
 };
