@@ -23,8 +23,8 @@ categoriesController.getOneById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        if (!id) {
-            return errorResponse(res, 'id is required');
+        if (!id || !Number(id)) {
+            return errorResponse(res, 'id is required and must be a number');
         }
 
         const categories = await categoryModel.getOneById(id);
@@ -43,8 +43,8 @@ categoriesController.create = async (req, res) => {
     try {
         const { name } = req.body;
 
-        if (!name) {
-            return errorResponse(res, 'name is required');
+        if (!name || !String(name)) {
+            return errorResponse(res, 'name is required and must be a string');
         }
 
         await categoryModel.create({ name });
@@ -60,8 +60,12 @@ categoriesController.update = async (req, res) => {
         const { id } = req.params;
         const { name } = req.body;
 
-        if (!name) {
-            return errorResponse(res, 'name is required');
+        if (!id || !Number(id)) {
+            return errorResponse(res, 'id is required and must be a number');
+        }
+
+        if (!name || !String(name)) {
+            return errorResponse(res, 'name is required and must be a string');
         }
 
         await categoryModel.update(id, { name });
@@ -76,8 +80,8 @@ categoriesController.delete = async (req, res) => {
     try {
         const { id } = req.params;
 
-        if (!id) {
-            return errorResponse(res, 'id is required');
+        if (!id || !Number(id)) {
+            return errorResponse(res, 'id is required and must be a number');
         }
 
         const categories = await categoryModel.getOneById(id);

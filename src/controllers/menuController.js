@@ -23,8 +23,8 @@ menuController.getOneById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        if (!id) {
-            return errorResponse(res, 'id is required');
+        if (!id || !Number(id)) {
+            return errorResponse(res, 'id is required and must be a number');
         }
 
         const menu = await menuModel.getOneById(id);
@@ -43,8 +43,11 @@ menuController.create = async (req, res) => {
     try {
         const { item, price } = req.body;
 
-        if (!item || !price) {
-            return errorResponse(res, 'item and price is required');
+        if (!item || !price || !String(item) || !Number(price)) {
+            return errorResponse(
+                res,
+                'item and price is required and must be a string and number'
+            );
         }
 
         await menuModel.create({ item, price });
@@ -60,8 +63,15 @@ menuController.update = async (req, res) => {
         const { id } = req.params;
         const { item, price } = req.body;
 
-        if (!item || !price) {
-            return errorResponse(res, 'item and price is required');
+        if (!id || !Number(id)) {
+            return errorResponse(res, 'id is required and must be a number');
+        }
+
+        if (!item || !price || !String(item) || !Number(price)) {
+            return errorResponse(
+                res,
+                'item and price is required and must be a string and number'
+            );
         }
 
         const menus = await menuModel.update(id, { item, price });
@@ -76,8 +86,8 @@ menuController.delete = async (req, res) => {
     try {
         const { id } = req.params;
 
-        if (!id) {
-            return errorResponse(res, 'id is required');
+        if (!id || !Number(id)) {
+            return errorResponse(res, 'id is required and must be a number');
         }
 
         const menu = await menuModel.getOneById(id);

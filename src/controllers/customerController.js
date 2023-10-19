@@ -23,8 +23,8 @@ customerController.getOneById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        if (!id) {
-            return errorResponse(res, 'id is required');
+        if (!id || !Number(id)) {
+            return errorResponse(res, 'id is required and must be a number');
         }
 
         const customer = await customerModel.getOneById(id);
@@ -43,8 +43,18 @@ customerController.create = async (req, res) => {
     try {
         const { name, address, email } = req.body;
 
-        if (!name || !address || !email) {
-            return errorResponse(res, 'name, address and email is required');
+        if (
+            !name ||
+            !address ||
+            !email ||
+            !String(name) ||
+            !String(address) ||
+            !String(email)
+        ) {
+            return errorResponse(
+                res,
+                'name, address and email is required and must be a string'
+            );
         }
 
         await customerModel.create({ name, address, email });
@@ -60,8 +70,18 @@ customerController.update = async (req, res) => {
         const { id } = req.params;
         const { name, address, email } = req.body;
 
-        if (!name || !address || !email) {
-            return errorResponse(res, 'name, address and email is required');
+        if (
+            !name ||
+            !address ||
+            !email ||
+            !String(name) ||
+            !String(address) ||
+            !String(email)
+        ) {
+            return errorResponse(
+                res,
+                'name, address and email is required and must be a string'
+            );
         }
 
         await customerModel.update(id, {
@@ -80,7 +100,7 @@ customerController.delete = async (req, res) => {
     try {
         const { id } = req.params;
 
-        if (!id) {
+        if (!id || !Number(id)) {
             return errorResponse(res, 'id is required');
         }
 
