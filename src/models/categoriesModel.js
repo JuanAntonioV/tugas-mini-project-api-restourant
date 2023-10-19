@@ -1,22 +1,22 @@
 const db = require('../../db/config');
 
-const menuModel = {};
-menuModel.getAll = (cb) => {
+const categoriesModel = {};
+categoriesModel.getAll = () => {
     return new Promise((resolve, reject) => {
-        db.all('SELECT * FROM menu', (err, rows) => {
+        db.all('SELECT * FROM categories', (err, rows) => {
             if (err) {
                 reject(err);
             } else {
-                return resolve(rows);
+                resolve(rows);
             }
         });
     });
 };
 
-menuModel.create = ({ item, price }) => {
+categoriesModel.create = ({ name }) => {
     return new Promise((resolve, reject) => {
         db.run(
-            `INSERT INTO menu (item,price) VALUES ('${item}', ${price})`,
+            `INSERT INTO categories (name) VALUES ('${name}')`,
             (err, rows) => {
                 if (err) {
                     reject(err);
@@ -28,22 +28,10 @@ menuModel.create = ({ item, price }) => {
     });
 };
 
-menuModel.getOneById = (id) => {
+categoriesModel.getOneById = (id) => {
     return new Promise((resolve, reject) => {
-        db.all(`SELECT * FROM menu WHERE id = '${id}' LIMIT 1`, (err, rows) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(rows);
-            }
-        });
-    });
-};
-
-menuModel.update = (id, data) => {
-    return new Promise((resolve, reject) => {
-        db.run(
-            `UPDATE menu SET item='${data.item}', price='${data.price}' WHERE id=${id}`,
+        db.all(
+            `SELECT * FROM categories WHERE id = '${id}' LIMIT 1`,
             (err, rows) => {
                 if (err) {
                     reject(err);
@@ -55,9 +43,24 @@ menuModel.update = (id, data) => {
     });
 };
 
-menuModel.delete = (id) => {
+categoriesModel.update = (id, data) => {
     return new Promise((resolve, reject) => {
-        db.run(`DELETE FROM menu WHERE id=${id}`, (err, rows) => {
+        db.run(
+            `UPDATE categories SET name='${data.name}' WHERE id=${id}`,
+            (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            }
+        );
+    });
+};
+
+categoriesModel.delete = (id) => {
+    return new Promise((resolve, reject) => {
+        db.run(`DELETE FROM categories WHERE id=${id}`, (err, rows) => {
             if (err) {
                 reject(err);
             } else {
@@ -67,4 +70,4 @@ menuModel.delete = (id) => {
     });
 };
 
-module.exports = menuModel;
+module.exports = categoriesModel;
